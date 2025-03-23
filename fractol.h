@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 09:28:09 by ldick             #+#    #+#             */
-/*   Updated: 2024/05/19 17:23:16 by ldick            ###   ########.fr       */
+/*   Updated: 2025/03/23 20:39:27 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <OpenCL/opencl.h>
+// # include <OpenCL/cl.h>
 
 typedef struct s_img
 {
@@ -29,20 +31,35 @@ typedef struct s_img
 	int		line_len;
 }			t_img;
 
+typedef struct s_gpu_calc
+{
+	cl_platform_id		platform_id;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	queue;
+	cl_uint				num_platforms;
+	cl_program			programm;
+	const char			*kernelSource;
+	cl_kernel			kernel;
+	cl_int				error;
+	cl_mem				image_buffer;
+}				t_gpu_calc;
+
 typedef struct s_fractal
 {
-	char	*name;
-	void	*mlx_hooks;
-	void	*mlx_window;
-	t_img	img;
-	double	escape_val;
-	double	shift_x;
-	double	shift_y;
-	double	zoom;
-	int		max_iterations;
-	double	julia_x;
-	double	julia_y;
-	double	old_min;
+	char		*name;
+	void		*mlx_hooks;
+	void		*mlx_window;
+	t_img		img;
+	double		escape_val;
+	double		shift_x;
+	double		shift_y;
+	double		zoom;
+	int			max_iterations;
+	double		julia_x;
+	double		julia_y;
+	double		old_min;
+	t_gpu_calc	gpu;
 }			t_fractal;
 
 typedef struct s_comp

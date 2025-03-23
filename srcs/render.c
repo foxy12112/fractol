@@ -6,11 +6,16 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:38:51 by ldick             #+#    #+#             */
-/*   Updated: 2024/05/17 15:13:59 by ldick            ###   ########.fr       */
+/*   Updated: 2025/03/23 18:16:14 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
+
+int	get_color(int r, int g, int b, int a)
+{
+	return ((r & 0xff) << 24 | (g & 0xff) << 16 | (b & 0xff) << 8 | (a & 0xff) << 0);
+}
 
 void	mandelbrot(int x, int y, t_fractal *f)
 {
@@ -29,7 +34,8 @@ void	mandelbrot(int x, int y, t_fractal *f)
 		z = sum_complex(square_complex(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > f->escape_val)
 		{
-			color = map(i, BLACK, WHITE, f->max_iterations);
+			// color = map(i, BLACK, WHITE, f->max_iterations);
+			color = get_color((i * x) % 256, (i * y) % 256, (i * (int)c.x - (int)c.y) % 256, 140);
 			mlx_put_pixel(f->img.img_ptr, x, y, color);
 			return ;
 		}
@@ -79,7 +85,7 @@ void	up_down_burning_ship(int x, int y, t_fractal *f)
 		z = sum_complex(square_complex(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > f->escape_val)
 		{
-			color = map(i, BLACK, WHITE, f->max_iterations);
+			color = get_color((i * (int)(x + y)) % 256, (i * (int)(y * x)) % 256, (i * (int)(y - x)) % 256, 140);
 			mlx_put_pixel(f->img.img_ptr, x, y, color);
 			return ;
 		}

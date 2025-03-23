@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -Werror
 ifeq ($(OS),Linux)
 	MLX_FLAGS = MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 else ifeq ($(OS),Darwin)
-	MLX_FLAGS = -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+	MLX_FLAGS = -framework Cocoa -framework OpenGL -framework OpenCL -framework IOKit -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 else
 	$(error OS is not Linux nor Darwin.)
 endif
